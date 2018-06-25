@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+	    ul{
+	    	padding: 0;
+	    }
+		li{
+			list-style-type: none;
+			display: inline-block;
+			background: red;
+			text-align: center;
+			height: 30px;
+			font-size: 20px;
+			color: white;
+			padding: 10px;
+			margin: 5px 5px;
+		}
+		button{
+			background: white;
+			border-radius: 5px;
+			border: 1px solid lightgray;
+			width: 70px;
+			/*margin-bottom:44px;*/
+		}
+	</style>
+</head>
+<body>
+	<p>
+		<textarea class="user_write" placeholder="请输入要插入的内容"></textarea>
+		<button class="add_left">左侧加入</button>
+		<button class="add_right">右侧加入</button>
+		<button class="del_left">左侧删除</button>
+		<button class="del_right">右侧删除</button>
+	</p>
+	<div>
+		<ul class="list"></ul>
+	</div>
+	<p>
+		<input type="text" name="cx"><input type="button" name="btn" value="查询" placeholder="输入要查询的字符">
+	</p>
+	<script type="text/javascript">
+
+		//获取元素
+		var user_write=document.getElementsByClassName("user_write")[0],
+		    btn=document.getElementsByTagName("button"),
+		    add_right=document.getElementsByClassName("add_right")[0],
+		    add_left=document.getElementsByClassName("add_left")[0],
+		    del_right=document.getElementsByClassName("del_right")[0],
+		    del_left=document.getElementsByClassName("del_left")[0],
+		    cx=document.getElementsByTagName("input")[0],
+		    cxbtn=document.getElementsByTagName("input")[1];
+		    list=document.getElementsByClassName("list")[0];
+		
+        	var reg=/[\s\n\t\r,]+/;//创建查询规则
+		//点击不同按钮的作用
+        (function(){
+        	for (let i = btn.length - 1; i >= 0; i--) {
+	        	btn[i].onclick=function(){
+                    var num=user_write.value;
+	        		//判断输入是否正确
+	        		if (!num) {
+                        alert("请输入"); 
+	        		}else{	
+		        		var arr=num.split(reg);
+		        		var len=arr.length;
+	        			for (var j = 0; j < len; j++) {
+	        			//输入正确后，创建li元素
+	        			var li=document.createElement("li");
+	        			li.innerHTML=arr[j];
+
+	        			//左侧加入
+	        			if (btn[i].className==="add_right") {
+		        			list.appendChild(li);
+		        		}
+
+		        		//右侧加入
+		        		if (btn[i].className==="add_left") {
+		        			list.insertBefore(li,list.firstElementChild);
+		        		}
+
+		        		//右侧删除
+		        		if (btn[i].className==="del_right") {
+		        			list.removeChild(list.lastElementChild);
+		        		}
+
+		        		//左侧除
+		        		if (btn[i].className==="del_left") {
+		        			list.removeChild(list.firstElementChild);
+		        		}
+	        		}
+	        		}
+        				
+	        	}
+	        }
+        })()
+        
+        //点击队列中任何一个元素，则删除
+        list.onclick=function(event){
+            list.removeChild(event.target);
+        }
+
+        //匹配值
+        cxbtn.onclick=function(){
+            for (var i = list.children.length - 1; i >= 0; i--) {
+            	var reg=new RegExp('('+cx.value+')',"g");
+            	//var pattern='/'+list.children[i].innerText'/'g;
+            	list.children[i].innerHTML=list.children[i].innerText.replace(reg,'<strong style="background:orange">$1</strong>');
+            }
+        }
+	</script>
+</body>
+</html>
