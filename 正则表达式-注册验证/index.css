@@ -1,0 +1,48 @@
+*{
+    padding:0;
+    margin:0;
+    font-size:16px;
+    font-family:"微软雅黑";
+}
+body{
+    background:#eeeeee;
+}
+header{
+    background:#3092d1;
+    line-height:30px;
+    text-indent:20px;
+    color:white;
+}
+#regList{
+    padding:30px 0 0 500px;
+    color: #878788;
+}
+#regList li{
+	list-style-type: none;
+	padding-bottom: 20px; 
+}
+#regList input{
+	margin:0 20px 0 30px;
+}
+#regList .left{
+	display: inline-block;
+	width: 100px;
+	text-align: right;
+}
+#regList .right{
+	/*display: none;*/
+	color: red;
+}
+#regList .subBtn{
+	width: 100px;
+	height: 50px;
+	background: #2375ba;
+	border-radius: 10px;
+	color: white;
+	margin: 40px 0 0 160px;
+    outline: none;
+    border: none;
+}
+input{
+	width: 200px;
+}
