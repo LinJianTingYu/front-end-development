@@ -1,0 +1,41 @@
+/* 内外边距通常让各个浏览器样式的表现位置不同 */
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td,hr,button,article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section {
+    margin:0;
+    padding:0;
+}
+
+a{
+	text-decoration: none;
+}
+ul,ol{
+	list-style: none;
+}
+/* 要注意表单元素并不继承父级 font 的问题 */
+body,button,input,select,textarea {
+    font:12px \5b8b\4f53,arial,sans-serif;
+}
+
+/* 去除默认边框 */
+fieldset,img {
+    border:none;
+}
+
+/* 设置浮动，减少浮动带来的 bug */
+.fl,.fr {
+    display:inline-block;
+}
+.fl {
+    float:left;
+}
+.fr {
+    float:right;
+}
+span,img{
+	display: inline-block;
+}
+input,textarea{
+	outline: none;
+}
+p{
+	margin: 0;
+}
