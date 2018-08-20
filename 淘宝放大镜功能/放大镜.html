@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>放大镜</title>
+	<style type="text/css">
+	    *{
+	    	padding: 0;
+	    	margin: 0;
+	    }
+	    .demo{
+	    	width: 550px;
+	    	margin: 50px auto;
+	    	overflow: hidden;
+	    }
+		.small-img{
+			width: 270px;
+			height: 270px;
+			position: relative;
+			float: left;
+		}
+		.magnifier{
+			display: none;
+		/*	left: 20px;*/
+		left: 0;
+			position: absolute;
+			width: 135px;
+			height: 135px;
+			opacity: .8;
+			background: lightgray;
+		}
+		.big-img{
+			position: relative;
+			display: none;
+			width: 270px;
+			height: 270px;
+			overflow: hidden;
+			float: left;
+			margin-left: 10px;
+		}
+		.big-img img{
+			position: absolute;
+			display: inline-block;
+		}
+	</style>
+</head>
+<body>
+	<div class="demo">
+		<div class="small-img">
+			<div class="magnifier"></div>
+			<img src="img/small.jpg">
+		</div>
+		<div class="big-img">
+			<img src="img/big.jpg" class="magnifier-img">
+		</div>
+	</div>
+	<script type="text/javascript">
+		var demo=document.getElementsByClassName('demo')[0],
+		    smallImg=document.getElementsByClassName('small-img')[0],
+		    magnifier=document.getElementsByClassName('magnifier')[0],
+		    bigImg=document.getElementsByClassName('big-img')[0],
+		    magnifierImg=document.getElementsByClassName('magnifier-img')[0],
+		    smallImgOffsetLeft=smallImg.offsetLeft,
+		    smallImgOffsetTop=smallImg.offsetTop;
+
+		//鼠标移入小图片时出现放大镜
+		smallImg.onmouseover=function () {
+			magnifier.style.display='block';
+			bigImg.style.display='block';
+		};   
+
+        //鼠标在小图片内移动时，放大镜跟随，且有放大效果
+        smallImg.onmousemove=function(eve){
+        	//鼠标的位置
+        	var _event=eve||window.event;
+            var Left=_event.clientX-smallImgOffsetLeft-magnifier.offsetWidth/2;
+        	var Top=_event.clientY-smallImgOffsetTop-magnifier.offsetHeight/2;
+
+        	if (Left<0) {
+        		Left=0;
+        	}else if(Left>0){ 
+        		if (Left>=smallImg.offsetWidth/2){
+        			Left=smallImg.offsetWidth/2;
+        		}
+        	};
+
+        	if (Top<0) {
+        		Top=0;
+        	}else if(Top>0){
+                if (Top>=smallImg.offsetHeight/2) {
+                	Top=smallImg.offsetHeight/2;
+                }
+        	};
+            
+            //放大镜位置
+            magnifier.style.top=Top+'px';
+            magnifier.style.left=Left+'px';
+            
+
+            //放大镜效果
+		    var scale=bigImg.offsetWidth/smallImg.offsetWidth;
+            magnifierImg.style.left=-Left*scale+'px';
+            magnifierImg.style.top=-Top*scale+'px';
+        }
+
+
+        //鼠标移出小图片时放大镜消失
+		smallImg.onmouseleave=function(){
+			magnifier.style.display='none';
+			bigImg.style.display='none';
+		}
+	</script>
+</body>
+</html>
