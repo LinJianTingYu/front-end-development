@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>滑块验证</title>
+	<link rel="stylesheet" type="text/css" href="font_768307_vw2qjf0zqtl/iconfont.css">
+	<style type="text/css">
+		.main{
+			position: relative;
+			width: 400px;
+			height: 40px;
+			background: lightgray;
+			margin: 50px auto;
+		}
+		.testsucces{
+			width: 400px;
+			height: 40px;
+			line-height: 40px;
+			text-align: center;
+			font-size: 20px;
+			position: absolute;
+		}
+		.movebox{
+			line-height: 30px;
+			text-align: center;
+			width: 48px;
+			height: 38px;
+			position: absolute;
+			background: white;
+			border: 1px solid lightgray;
+		}
+		.movebox{
+			font-size: 26px;
+		}
+		.succesColor{
+			height:40px;
+		/*	width: 400px;*/
+			position: absolute;
+			background: lightgreen; 
+		}
+	</style>
+</head>
+<body>
+	<div class="main">
+		<div class="succesColor"></div>
+		<div class="testsucces">拖动滑块验证</div>
+		<div class="movebox"><i class="icon-shuangjiantouyou iconfont"></i></div>
+	</div>
+	<script type="text/javascript">
+		var wrap=document.getElementsByClassName('main')[0];
+		var movebox=document.getElementsByClassName('movebox')[0];
+		var testMessage=document.getElementsByClassName('testsucces')[0];
+		var succesColor=document.getElementsByClassName('succesColor')[0];
+		var isMouseDown=false;
+		var maxLeft=wrap.offsetWidth-movebox.offsetWidth;//获取最大滑块left的值
+		var mouseDownX;
+
+
+		movebox.onmousedown=function (eve) {
+			
+			isMouseDown=true;
+			var _event=eve;
+			//获取点击点的位置
+			mouseDownX=_event.clientX;
+		}
+        
+        //抬起鼠标
+		movebox.onmouseup=function(){
+
+			isMouseDown=false;//抬起鼠标，移动无效
+             
+            //如果没有验证成功，则返回原位置
+			if (movebox.offsetLeft!=maxLeft) {
+                    movebox.style.left=0+'px';
+                    succesColor.style.width=0+'px';
+				}else{   //验证成功就改变文字颜色
+                    testMessage.style.color='white';
+				}
+		}
+
+		movebox.onmousemove=function(event){
+
+			//鼠标一直处于按下状态才能拖动有效
+			if (isMouseDown) {
+
+				var mouseMoveX=event.clientX;
+
+				var left=mouseMoveX-mouseDownX;//拖动的距离
+                
+                //如果拖动的距离超出了mian的右边界
+				if (left>=maxLeft) {
+                    left=maxLeft;
+                    testMessage.innerText='验证成功';
+                    isMouseDown=false;
+				}
+
+				//如果拖动的距离超出了mian的左边界
+				if (left<0) {
+					left=0;
+				}
+
+				//设置滑块的位置，及拖动过区域的背景颜色
+                succesColor.style.width=left+'px';
+				movebox.style.left=left+'px';
+            }
+		}
+	</script>
+</body>
+</html>
