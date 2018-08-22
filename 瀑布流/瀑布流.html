@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>瀑布流</title>
+	<style type="text/css">
+	    *{
+	    	padding: 0;
+	    	margin: 0;
+	    }
+		#main{
+			position: relative;
+		}
+		.box{
+			padding: 15px 0 0 15px;
+			float: left;
+		}
+		.img{
+			padding: 10px;
+			border: 1px solid gray;
+			border-radius: 10px; 
+			box-shadow: 0px 0px 5px #ccc;
+		}
+		.img img{
+			width: 120px;
+			height: auto;
+		}
+	</style>
+</head>
+<body>
+	<div id="main">
+		<div class="box">
+			<div class="img"><img src="img/1.jpg" alt=""></div>
+		</div>
+		<div class="box">
+			<div class="img"><img src="img/2.jpg" alt=""></div>
+		</div>
+		<div class="box">
+			<div class="img"><img src="img/3.jpg" alt=""></div>
+		</div>
+		<div class="box">
+			<div class="img"><img src="img/4.jpg" alt=""></div>
+		</div>
+		<div class="box">
+			<div class="img"><img src="img/5.jpg" alt=""></div>
+		</div>
+		<div class="box">
+			<div class="img"><img src="img/6.jpg" alt=""></div>
+		</div>
+		<div class="box">
+			<div class="img"><img src="img/7.jpg" alt=""></div>
+		</div>
+		<div class="box">
+			<div class="img"><img src="img/8.jpg" alt=""></div>
+		</div>
+		<div class="box">
+			<div class="img"><img src="img/9.jpg" alt=""></div>
+		</div>
+		<div class="box">
+			<div class="img"><img src="img/10.jpg" alt=""></div>
+		</div>
+		<div class="box">
+			<div class="img"><img src="img/11.jpg" alt=""></div>
+		</div>
+		<div class="box">
+			<div class="img"><img src="img/12.jpg" alt=""></div>
+		</div>
+		<div class="box">
+			<div class="img"><img src="img/13.jpg" alt=""></div>
+		</div>
+		<div class="box">
+			<div class="img"><img src="img/14.jpg" alt=""></div>
+		</div>
+		<div class="box">
+			<div class="img"><img src="img/15.jpg" alt=""></div>
+		</div>
+		<div class="box">
+			<div class="img"><img src="img/16.jpg" alt=""></div>
+		</div>
+		<div class="box">
+			<div class="img"><img src="img/17.jpg" alt=""></div>
+		</div>
+		<div class="box">
+			<div class="img"><img src="img/18.jpg" alt=""></div>
+		</div>
+		<div class="box">
+			<div class="img"><img src="img/19.jpg" alt=""></div>
+		</div>
+		<div class="box">
+			<div class="img"><img src="img/20.jpg" alt=""></div>
+		</div>
+		<div class="box">
+			<div class="img"><img src="img/21.jpg" alt=""></div>
+		</div>
+
+		<div class="box">
+			<div class="img"><img src="img/22.jpg" alt=""></div>
+		</div>
+		<div class="box">
+			<div class="img"><img src="img/23.jpg" alt=""></div>
+		</div>
+		<div class="box">
+			<div class="img"><img src="img/24.jpg" alt=""></div>
+		</div>
+		<div class="box">
+			<div class="img"><img src="img/25.jpg" alt=""></div>
+		</div>
+		<div class="box">
+			<div class="img"><img src="img/26.jpg" alt=""></div>
+		</div>
+		<div class="box">
+			<div class="img"><img src="img/27.jpg" alt=""></div>
+		</div>
+		<div class="box">
+			<div class="img"><img src="img/28.jpg" alt=""></div>
+		</div>
+		<div class="box">
+			<div class="img"><img src="img/29.jpg" alt=""></div>
+		</div>
+		<div class="box">
+			<div class="img"><img src="img/30.jpg" alt=""></div>
+		</div>
+		<div class="box">
+			<div class="img"><img src="img/31.jpg" alt=""></div>
+		</div>
+	</div>
+	<script type="text/javascript">
+		var wrap=document.getElementById('main');
+		var boxImg=document.getElementsByClassName('box');
+        var dataInt={
+        	"data":[{"src":"1.jpg"},{"src":"2.jpg"},{"src":"3.jpg"},{"src":"4.jpg"},{"src":"5.jpg"},{"src":"6.jpg"},{"src":"7.jpg"},{"src":"8.jpg"}]
+        };
+		//滑动鼠标加载
+		window.onscroll=function(){
+			if (isScrollSlider()) {
+               for (var i = dataInt.data.length - 1; i >= 0; i--) {
+                	var boxImg=document.createElement('div');
+                	boxImg.className='box';
+                	wrap.appendChild(boxImg);
+                	boxImg.innerHTML='<div class="img"><img src="img/'+dataInt.data[i]['src']+'" alt=""></div>';
+               }
+
+                waterfull();
+			}else{
+               return
+			}
+			isScrollSlider();
+		};
+		function isScrollSlider(){
+			var lastImgBox=boxImg[boxImg.length-1];
+			var latBoxH=lastImgBox.offsetTop+lastImgBox.offsetHeight;//最后一个图片中间距顶点位置
+			var scrollHeight=document.documentElement.scrollTop+document.documentElement.clientHeight;
+			return latBoxH-scrollHeight;
+		};
+
+		function waterfull(){
+			//图片盒子的宽度
+			var boxImgWidth=boxImg[0].offsetWidth;
+
+			//网页宽度
+			var clientWdith=document.documentElement.clientWidth;
+
+			//图片列数
+			var imgCol=Math.floor(clientWdith/boxImgWidth);
+
+			wrap.style.width=boxImgWidth*imgCol+'px';
+			wrap.style.margin='0 auto';
+
+			//存放每一列的高度
+			var hArr=[];
+			for (let i = 0; i < boxImg.length; i++) {
+				if (i<imgCol) {
+					hArr.push(boxImg[i].offsetHeight);
+				}else{
+			        //找出高度最低的box;
+			        var minH=Math.min.apply(null,hArr);
+			        var index=getMinIndex(minH,hArr);
+			        boxImg[i].style.position='absolute';
+			        boxImg[i].style.left=index*boxImgWidth+'px';
+			        boxImg[i].style.top=minH+'px';
+			        hArr[index]+=boxImg[i].offsetHeight;
+		        }
+			}
+	        function getMinIndex(value,arr) {
+	        	for (let i = arr.length - 1; i >= 0; i--) {
+	        		if (arr[i]==value) {
+	        			return i;
+	        		}
+	        	}
+	        }
+		};
+		waterfull();
+	</script>
+</body>
+</html>
